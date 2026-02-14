@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: tours
+  mongodb:
+    uri: ${MONGO_URI:mongodb://localhost:27017/tours}
+server:
+  port: ${PORT:8083}
