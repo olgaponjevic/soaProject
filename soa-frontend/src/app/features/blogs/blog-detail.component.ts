@@ -6,6 +6,7 @@ import { BlogsApiService } from '../../core/services/blogs-api.service';
 import { FollowsApiService } from '../../core/services/follows-api.service';
 import { BlogResponse, CommentResponse } from '../../core/models/blog.models';
 import { MarkdownPipe } from '../../core/pipes/markdown.pipe';
+import { IdentityService } from '../../core/services/identity.service';
 
 @Component({
   standalone: true,
@@ -81,7 +82,8 @@ export class BlogDetailComponent {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private blogsApi: BlogsApiService,
-    private followsApi: FollowsApiService
+    private followsApi: FollowsApiService,
+    private identity: IdentityService
   ) {
     this.commentForm = this.fb.group({
       text: ['', [Validators.required]]
@@ -157,16 +159,26 @@ export class BlogDetailComponent {
     if (!this.blog) return;
     if (this.commentForm.invalid) return;
 
+    const userId = this.identity.getId();
+    const username = this.identity.getUsername();
+    if (!userId) {
+      this.error = 'Nedostaje userId (uloguj se ponovo).';
+      return;
+    }
+
     this.commenting = true;
     const text = this.commentForm.getRawValue().text!.trim();
 
-    this.blogsApi.addComment(this.blog.id, { text }).subscribe({
+    this.blogsApi.addComment(this.blog.id, {
+      actor: { userId, username },
+      text
+    }).subscribe({
       next: (c) => {
         this.comments = [c, ...this.comments];
         this.commentForm.reset({ text: '' });
       },
       error: (err) => {
-        this.error = err?.error?.error ?? 'Greška pri slanju komentara.';
+        this.error = err?.error?.details ?? err?.error?.error ?? 'Greška pri slanju komentara.';
       },
       complete: () => (this.commenting = false)
     });

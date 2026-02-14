@@ -19,7 +19,7 @@ public class FollowService {
         if (meId == targetId) throw new BadRequestException("You cannot follow yourself.");
 
         userGraph.upsert(meId, meUsername);
-        users.upsertUser(targetId, null); // target možda nema username, ali čvor mora postojati
+        users.upsertUser(targetId, null);
 
         users.follow(meId, targetId);
     }

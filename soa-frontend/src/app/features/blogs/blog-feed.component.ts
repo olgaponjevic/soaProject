@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { BlogsApiService } from '../../core/services/blogs-api.service';
 import { FollowsApiService } from '../../core/services/follows-api.service';
-import { BlogResponse } from '../../core/models/blog.models';
+import { BlogResponse, UserSummary } from '../../core/models/blog.models';
 
 @Component({
   standalone: true,
@@ -17,7 +17,14 @@ import { BlogResponse } from '../../core/models/blog.models';
   <div *ngIf="loading">Učitavanje...</div>
   <p class="err" *ngIf="error">{{error}}</p>
 
-  <div *ngIf="!loading && blogs.length === 0">Nema blogova u feed-u.</div>
+  <div *ngIf="!loading && blogs.length === 0">
+    Nema blogova u feed-u. Zaprati nekog:
+
+    <div *ngFor="let u of recommended" style="display:flex; justify-content:space-between; margin:8px 0;">
+      <div><b>{{u.username}}</b> (id: {{u.id}})</div>
+      <button (click)="toggleFollow(u.id)" [disabled]="followBusy[u.id]">Follow</button>
+    </div>
+  </div>
 
   <div *ngFor="let b of blogs" style="border:1px solid #ddd; padding:12px; border-radius:8px; margin:10px 0;">
     <div style="display:flex; justify-content:space-between; gap:12px;">
@@ -46,6 +53,7 @@ export class BlogFeedComponent {
   loading = false;
   error = '';
   blogs: BlogResponse[] = [];
+  recommended: UserSummary[] = [];
 
   followingIds = new Set<number>();
   followBusy: Record<number, boolean> = {};
@@ -69,6 +77,11 @@ export class BlogFeedComponent {
       next: (res) => this.blogs = res,
       error: (err) => this.error = err?.error?.error ?? 'Greška pri učitavanju feed-a.',
       complete: () => (this.loading = false)
+    });
+
+    this.followsApi.recommendations(10).subscribe({
+      next: r => this.recommended = r,
+      error: () => {}
     });
   }
 

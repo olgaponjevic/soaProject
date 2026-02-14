@@ -35,7 +35,7 @@ export class BlogsApiService {
     return this.http.get<CommentResponse[]>(`${this.base}/${blogId}/comments`);
   }
 
-  addComment(blogId: string, body: CommentCreateRequest): Observable<CommentResponse> {
+  addComment(blogId: string, body: CommentCreateRequest) {
     return this.http.post<CommentResponse>(`${this.base}/${blogId}/comments`, body);
   }
 }

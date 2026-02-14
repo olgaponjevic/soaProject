@@ -25,6 +25,7 @@ export interface BlogResponse {
 }
 
 export interface CommentCreateRequest {
+  actor: ActorDto;
   text: string;
 }
 
