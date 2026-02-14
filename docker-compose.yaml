@@ -76,6 +76,18 @@ services:
     ports:
       - "8083:8083"
 
+  gateway:
+    image: nginx:alpine
+    container_name: api-gateway
+    depends_on:
+      - users-api
+      - tours-api
+      - blog-followers
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+
 volumes:
   pgdata:
   neo4j_data:

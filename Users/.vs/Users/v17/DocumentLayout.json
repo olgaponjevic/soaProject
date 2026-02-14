@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\milos.DESKTOP-K0ADGSS\\Documents\\Faks\\soa\\Users\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9C3E99C6-A640-4073-AE71-856D8A9F05EF}|Users\\Users.csproj|c:\\users\\milos.desktop-k0adgss\\documents\\faks\\soa\\users\\users\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9C3E99C6-A640-4073-AE71-856D8A9F05EF}|Users\\Users.csproj|solutionrelative:users\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9C3E99C6-A640-4073-AE71-856D8A9F05EF}|Users\\Users.csproj|c:\\users\\milos.desktop-k0adgss\\documents\\faks\\soa\\users\\users\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9C3E99C6-A640-4073-AE71-856D8A9F05EF}|Users\\Users.csproj|solutionrelative:users\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9C3E99C6-A640-4073-AE71-856D8A9F05EF}|Users\\Users.csproj|c:\\users\\milos.desktop-k0adgss\\documents\\faks\\soa\\users\\users\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{9C3E99C6-A640-4073-AE71-856D8A9F05EF}|Users\\Users.csproj|solutionrelative:users\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9C3E99C6-A640-4073-AE71-856D8A9F05EF}|Users\\Users.csproj|c:\\users\\milos.desktop-k0adgss\\documents\\faks\\soa\\users\\users\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9C3E99C6-A640-4073-AE71-856D8A9F05EF}|Users\\Users.csproj|solutionrelative:users\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,11 +30,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\milos.DESKTOP-K0ADGSS\\Documents\\Faks\\soa\\Users\\Users\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Users\\Data\\AppDbContext.cs",
@@ -42,12 +42,11 @@
               "RelativeToolTip": "Users\\Data\\AppDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-08T20:37:34.439Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-08T20:37:34.439Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\milos.DESKTOP-K0ADGSS\\Documents\\Faks\\soa\\Users\\Users\\appsettings.json",
               "RelativeDocumentMoniker": "Users\\appsettings.json",
@@ -55,12 +54,11 @@
               "RelativeToolTip": "Users\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-08T20:33:38.311Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-08T20:33:38.311Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\milos.DESKTOP-K0ADGSS\\Documents\\Faks\\soa\\Users\\Users\\Program.cs",
               "RelativeDocumentMoniker": "Users\\Program.cs",
@@ -73,7 +71,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\milos.DESKTOP-K0ADGSS\\Documents\\Faks\\soa\\Users\\Users\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Users\\Properties\\launchSettings.json",
@@ -81,18 +79,17 @@
               "RelativeToolTip": "Users\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-08T20:25:34.887Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-08T20:25:34.887Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\milos.DESKTOP-K0ADGSS\\Documents\\Faks\\soa\\Users\\Users\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Users\\Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\milos.DESKTOP-K0ADGSS\\Documents\\Faks\\soa\\Users\\Users\\Controllers\\UserController.cs",
               "RelativeToolTip": "Users\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAqwAkAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAAAwwDkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-08T20:21:56.561Z",
               "EditorCaption": ""
