@@ -62,7 +62,6 @@ public class BlogService {
         Long authorId = blogs.getAuthorId(blogId);
         if (authorId == null) throw new NotFoundException("Blog not found.");
 
-        // Pravilo iz zahteva 9: moraš pratiti autora da bi komentarisao njegov blog (osim ako je tvoj blog)
         if (authorId != meId) {
             boolean follows = users.isFollowing(meId, authorId);
             if (!follows) throw new ForbiddenException("You must follow the author to comment on this blog.");

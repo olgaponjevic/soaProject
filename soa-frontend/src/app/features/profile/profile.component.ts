@@ -4,6 +4,7 @@ import { RouterLink, Router } from '@angular/router';
 import { UsersApiService } from '../../core/services/users-api.service';
 import { AuthApiService } from '../../core/services/auth-api.service';
 import { ProfileResponse } from '../../core/models/user.models';
+import { IdentityService } from '../../core/services/identity.service';
 
 @Component({
   standalone: true,
@@ -38,11 +39,15 @@ export class ProfileComponent {
   constructor(
     private usersApi: UsersApiService,
     private auth: AuthApiService,
-    private router: Router
+    private router: Router,
+    private identity: IdentityService
   ) {}
 
   ngOnInit(): void {
     this.load();
+    this.usersApi.me().subscribe(p => {
+      this.identity.set(p.id, p.username);
+    });
   }
 
   load(): void {

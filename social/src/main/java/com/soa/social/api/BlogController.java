@@ -1,11 +1,9 @@
 package com.soa.social.api;
 
 import com.soa.social.api.dto.*;
-import com.soa.social.core.IdentityResolver;
 import com.soa.social.domain.BlogNode;
 import com.soa.social.domain.CommentNode;
 import com.soa.social.service.BlogService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +15,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BlogController {
 
-    private final IdentityResolver identity;
     private final BlogService blogService;
 
     @PostMapping
-    public BlogResponse create(@Valid @RequestBody BlogCreateRequest body, HttpServletRequest req) {
-        var me = identity.requireIdentity(req);
-        var blog = blogService.createBlog(me.userId(), me.username(), body.title(), body.description(), body.imageUrls());
+    public BlogResponse create(@Valid @RequestBody BlogCreateRequest body) {
+        var actor = body.actor();
+        var blog = blogService.createBlog(
+                actor.userId(),
+                actor.username(),
+                body.title(),
+                body.description(),
+                body.imageUrls()
+        );
         return toBlogResponse(blog);
     }
 
@@ -33,9 +36,8 @@ public class BlogController {
     }
 
     @GetMapping("/feed")
-    public List<BlogResponse> feed(HttpServletRequest req) {
-        var me = identity.requireIdentity(req);
-        return blogService.feed(me.userId()).stream().map(this::toBlogResponse).toList();
+    public List<BlogResponse> feed(@RequestParam long userId) {
+        return blogService.feed(userId).stream().map(this::toBlogResponse).toList();
     }
 
     @GetMapping("/user/{userId}")
@@ -50,10 +52,9 @@ public class BlogController {
 
     @PostMapping("/{blogId}/comments")
     public CommentResponse addComment(@PathVariable String blogId,
-                                      @Valid @RequestBody CommentCreateRequest body,
-                                      HttpServletRequest req) {
-        var me = identity.requireIdentity(req);
-        var c = blogService.addComment(me.userId(), me.username(), blogId, body.text());
+                                      @Valid @RequestBody CommentCreateRequest body) {
+        var actor = body.actor();
+        var c = blogService.addComment(actor.userId(), actor.username(), blogId, body.text());
         return toCommentResponse(c);
     }
 

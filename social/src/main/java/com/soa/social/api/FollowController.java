@@ -1,9 +1,9 @@
 package com.soa.social.api;
 
+import com.soa.social.api.dto.FollowRequest;
 import com.soa.social.api.dto.UserSummary;
-import com.soa.social.core.IdentityResolver;
 import com.soa.social.service.FollowService;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,41 +14,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FollowController {
 
-    private final IdentityResolver identity;
     private final FollowService follows;
 
     @PostMapping("/{targetUserId}")
-    public void follow(@PathVariable long targetUserId, HttpServletRequest req) {
-        var me = identity.requireIdentity(req);
-        follows.follow(me.userId(), me.username(), targetUserId);
+    public void follow(@PathVariable long targetUserId, @Valid @RequestBody FollowRequest body) {
+        var actor = body.actor();
+        follows.follow(actor.userId(), actor.username(), targetUserId);
     }
 
     @DeleteMapping("/{targetUserId}")
-    public void unfollow(@PathVariable long targetUserId, HttpServletRequest req) {
-        var me = identity.requireIdentity(req);
-        follows.unfollow(me.userId(), targetUserId);
+    public void unfollow(@PathVariable long targetUserId, @RequestParam long userId) {
+        follows.unfollow(userId, targetUserId);
     }
 
     @GetMapping("/following")
-    public List<UserSummary> following(HttpServletRequest req) {
-        var me = identity.requireIdentity(req);
-        return follows.following(me.userId()).stream()
+    public List<UserSummary> following(@RequestParam long userId) {
+        return follows.following(userId).stream()
                 .map(u -> new UserSummary(u.getId(), u.getUsername()))
                 .toList();
     }
 
     @GetMapping("/followers")
-    public List<UserSummary> followers(HttpServletRequest req) {
-        var me = identity.requireIdentity(req);
-        return follows.followers(me.userId()).stream()
+    public List<UserSummary> followers(@RequestParam long userId) {
+        return follows.followers(userId).stream()
                 .map(u -> new UserSummary(u.getId(), u.getUsername()))
                 .toList();
     }
 
     @GetMapping("/recommendations")
-    public List<UserSummary> recommendations(@RequestParam(defaultValue = "10") int limit, HttpServletRequest req) {
-        var me = identity.requireIdentity(req);
-        return follows.recommend(me.userId(), limit).stream()
+    public List<UserSummary> recommendations(@RequestParam long userId,
+                                             @RequestParam(defaultValue = "10") int limit) {
+        return follows.recommend(userId, limit).stream()
                 .map(u -> new UserSummary(u.getId(), u.getUsername()))
                 .toList();
     }
