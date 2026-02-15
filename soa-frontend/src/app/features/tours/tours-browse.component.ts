@@ -31,6 +31,7 @@ import { IdentityService } from '../../core/services/identity.service';
     <div style="margin-top:8px">
       <a [routerLink]="['/tours', t.id, 'edit']">Uredi / Detalji</a>
       <button style="margin-left:12px" (click)="addToCart(t)" [disabled]="adding[t.id] || t.status !== 'PUBLISHED'">Dodaj u korpu</button>
+      <a [routerLink]="['/executions/start', t.id]" style="margin-left:12px">Pokreni turu</a>
     </div>
   </div>
   `

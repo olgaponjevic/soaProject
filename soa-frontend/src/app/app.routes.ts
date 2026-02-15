@@ -11,6 +11,8 @@ import { TourListComponent } from './features/tours/tour-list.component';
 import { TourDetailComponent } from './features/tours/tour-detail.component';
 import { CartComponent } from './features/cart/cart.component';
 import { ToursBrowseComponent } from './features/tours/tours-browse.component';
+import { SimulatorComponent } from './features/simulator/simulator.component';
+import { ExecutionRunComponent } from './features/executions/execution-run.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -29,6 +31,8 @@ export const routes: Routes = [
   { path: 'tours/mine', component: TourListComponent, canActivate: [AuthGuard] },
   { path: 'tours/:id/edit', component: TourDetailComponent, canActivate: [AuthGuard] },
   { path: 'tours', component: ToursBrowseComponent, canActivate: [AuthGuard] },
+  { path: 'simulator', component: SimulatorComponent, canActivate: [AuthGuard] },
+  { path: 'executions/start/:tourId', component: ExecutionRunComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
 
   { path: '**', redirectTo: 'profile' }
