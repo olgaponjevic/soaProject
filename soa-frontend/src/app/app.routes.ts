@@ -9,6 +9,8 @@ import { BlogDetailComponent } from './features/blogs/blog-detail.component';
 import { TourCreateComponent } from './features/tours/tour-create.component';
 import { TourListComponent } from './features/tours/tour-list.component';
 import { TourDetailComponent } from './features/tours/tour-detail.component';
+import { CartComponent } from './features/cart/cart.component';
+import { ToursBrowseComponent } from './features/tours/tours-browse.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -26,6 +28,8 @@ export const routes: Routes = [
   { path: 'tours/new', component: TourCreateComponent, canActivate: [AuthGuard] },
   { path: 'tours/mine', component: TourListComponent, canActivate: [AuthGuard] },
   { path: 'tours/:id/edit', component: TourDetailComponent, canActivate: [AuthGuard] },
+  { path: 'tours', component: ToursBrowseComponent, canActivate: [AuthGuard] },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
 
   { path: '**', redirectTo: 'profile' }
 ];

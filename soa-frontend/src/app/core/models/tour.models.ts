@@ -24,6 +24,8 @@ export interface TourResponse {
   price: number;
   authorId: number;
   authorUsername?: string | null;
+  keyPoints?: KeyPoint[];
+  transportTimes?: TransportTime[];
 }
 
 export interface AddKeyPointRequest {
@@ -41,4 +43,16 @@ export interface KeyPoint {
   imageUrl?: string | null;
   lat: number;
   lon: number;
+}
+
+export type TransportType = 'WALK' | 'BIKE' | 'CAR';
+
+export interface TransportTime {
+  type: TransportType;
+  minutes: number;
+}
+
+export interface SetTransportTimesRequest {
+  authorId: number;
+  items: TransportTime[];
 }

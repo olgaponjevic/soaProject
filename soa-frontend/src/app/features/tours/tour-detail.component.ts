@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToursApiService } from '../../core/services/tours-api.service';
 import { IdentityService } from '../../core/services/identity.service';
-import { AddKeyPointRequest, KeyPoint } from '../../core/models/tour.models';
+import { AddKeyPointRequest, KeyPoint, TransportTime, TransportType, SetTransportTimesRequest } from '../../core/models/tour.models';
 
 import * as L from 'leaflet';
 
@@ -42,6 +42,29 @@ import * as L from 'leaflet';
       <ul>
         <li *ngFor="let p of points">{{p.name}} — ({{p.lat.toFixed(5)}}, {{p.lon.toFixed(5)}})</li>
       </ul>
+
+      <hr />
+      <h3>Transport times</h3>
+      <div *ngIf="transportTimes?.length === 0">Nema definisanih transport vremena.</div>
+      <ul>
+        <li *ngFor="let tt of transportTimes">{{tt.type}} — {{tt.minutes}} min</li>
+      </ul>
+
+      <div style="margin-top:8px">
+        <label>Tip</label>
+        <select [(ngModel)]="newType">
+          <option [value]="'WALK'">Peške</option>
+          <option [value]="'BIKE'">Biciklom</option>
+          <option [value]="'CAR'">Autom</option>
+        </select>
+        <label>Minuta</label>
+        <input type="number" [(ngModel)]="newMinutes" />
+        <button (click)="addTransportTime()" style="margin-left:8px">Dodaj</button>
+      </div>
+
+      <div style="margin-top:8px">
+        <button (click)="saveTransportTimes()" [disabled]="transportTimes.length === 0">Sačuvaj transport vremena</button>
+      </div>
     </div>
   </div>
   `,
@@ -59,6 +82,9 @@ export class TourDetailComponent implements AfterViewInit {
   saving = false;
   error = '';
   points: KeyPoint[] = [];
+  transportTimes: TransportTime[] = [];
+  newType: TransportType = 'WALK';
+  newMinutes = 10;
 
   tourId = '';
 
@@ -78,6 +104,13 @@ export class TourDetailComponent implements AfterViewInit {
       const lon = e.latlng.lng as number;
       this.selectLocation(lat, lon);
     });
+
+    // load existing tour data (keypoints / transport times)
+    const me = this.identity.getId();
+    this.api.get(this.tourId, me ?? undefined).subscribe({ next: (t) => {
+      if (t.keyPoints) this.points = t.keyPoints;
+      if (t.transportTimes) this.transportTimes = t.transportTimes;
+    }, error: () => {} });
   }
 
   selectLocation(lat: number, lon: number) {
@@ -116,5 +149,18 @@ export class TourDetailComponent implements AfterViewInit {
       error: (err) => { this.error = err?.error?.details ?? err?.error?.error ?? 'Greška pri dodavanju tačke.'; this.saving = false; },
       complete: () => (this.saving = false)
     });
+  }
+
+  addTransportTime() {
+    const m = Number(this.newMinutes);
+    if (!m || m < 1) { alert('Minuta mora biti >= 1'); return; }
+    this.transportTimes.push({ type: this.newType, minutes: m });
+  }
+
+  saveTransportTimes() {
+    const userId = this.identity.getId();
+    if (!userId) { alert('Nedostaje userId (uloguj se).'); return; }
+    const body: SetTransportTimesRequest = { authorId: userId, items: this.transportTimes };
+    this.api.setTransportTimes(this.tourId, body).subscribe({ next: () => { alert('Sačuvano.'); }, error: (err) => { alert(err?.error?.details ?? 'Greška pri čuvanju transport vremena.'); } });
   }
 }

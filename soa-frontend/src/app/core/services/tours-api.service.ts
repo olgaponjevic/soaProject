@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, throwError } from 'rxjs';
-import { TourCreateRequest, TourResponse, AddKeyPointRequest } from '../models/tour.models';
+import { TourCreateRequest, TourResponse, AddKeyPointRequest, SetTransportTimesRequest } from '../models/tour.models';
 import { IdentityService } from './identity.service';
 
 @Injectable({ providedIn: 'root' })
@@ -23,5 +23,24 @@ export class ToursApiService {
 
   addKeyPoint(tourId: string, body: AddKeyPointRequest) {
     return this.http.post<TourResponse>(`${this.base}/${tourId}/keypoints`, body);
+  }
+
+  published(): Observable<TourResponse[]> {
+    return this.http.get<TourResponse[]>(`${this.base}/published`);
+  }
+  
+  publish(tourId: string) {
+    const userId = this.identity.getId();
+    if (!userId) return throwError(() => new Error('Missing userId in IdentityService'));
+    return this.http.post<TourResponse>(`${this.base}/${tourId}/publish?authorId=${userId}`, {});
+  }
+  
+  setTransportTimes(tourId: string, body: SetTransportTimesRequest) {
+    return this.http.post<TourResponse>(`${this.base}/${tourId}/transport-times`, body);
+  }
+
+  get(tourId: string, touristId?: number) {
+    const q = touristId ? `?touristId=${touristId}` : '';
+    return this.http.get<TourResponse>(`${this.base}/${tourId}${q}`);
   }
 }
