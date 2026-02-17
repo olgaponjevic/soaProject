@@ -19,9 +19,11 @@ public interface BlogRepository extends Neo4jRepository<BlogNode, String> {
     List<BlogNode> findByAuthor(long authorId);
 
     @Query("""
-    MATCH (me:User {id:$meId})-[:FOLLOWS]->(a:User)-[:AUTHORED]->(b:Blog)
+    MATCH (b:Blog)<-[:AUTHORED]-(author:User)
+    OPTIONAL MATCH (me:User {id:$meId})-[:FOLLOWS]->(author)
+    WITH b, author, (me IS NOT NULL) AS followed
     RETURN b
-    ORDER BY b.createdAt DESC
+    ORDER BY followed DESC, b.createdAt DESC
   """)
     List<BlogNode> feed(long meId);
 
