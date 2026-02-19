@@ -37,6 +37,14 @@ public class FollowService {
     }
 
     public List<UserNode> recommend(long meId, int limit) {
-        return users.recommend(meId, Math.max(1, Math.min(limit, 50)));
+        int boundedLimit = Math.max(1, Math.min(limit, 50));
+
+        List<UserNode> recs = users.recommendFromFollows(meId, boundedLimit);
+
+        if (recs.isEmpty()) {
+            return users.findAllUsersExcept(meId, boundedLimit);
+        }
+
+        return recs;
     }
 }

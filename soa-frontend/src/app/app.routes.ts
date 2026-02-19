@@ -13,6 +13,7 @@ import { CartComponent } from './features/cart/cart.component';
 import { ToursBrowseComponent } from './features/tours/tours-browse.component';
 import { SimulatorComponent } from './features/simulator/simulator.component';
 import { ExecutionRunComponent } from './features/executions/execution-run.component';
+import { UsersDiscoverComponent } from './features/users/users-discover.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: 'blogs/feed', component: BlogFeedComponent, canActivate: [AuthGuard] },
   { path: 'blogs/new', component: BlogCreateComponent, canActivate: [AuthGuard] },
   { path: 'blogs/:id', component: BlogDetailComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersDiscoverComponent, canActivate: [AuthGuard] },
   { path: 'tours/new', component: TourCreateComponent, canActivate: [AuthGuard] },
   { path: 'tours/mine', component: TourListComponent, canActivate: [AuthGuard] },
   { path: 'tours/:id/edit', component: TourDetailComponent, canActivate: [AuthGuard] },

@@ -45,12 +45,22 @@ public interface UserRepository extends Neo4jRepository<UserNode, Long> {
     List<UserNode> findFollowers(long meId);
 
     @Query("""
-    MATCH (me:User {id:$meId})-[:FOLLOWS]->(:User)-[:FOLLOWS]->(rec:User)
-    WHERE rec.id <> $meId AND NOT (me)-[:FOLLOWS]->(rec)
+    MATCH (me:User {id: $meId})-[:FOLLOWS]->(:User)-[:FOLLOWS]->(rec:User)
+    WHERE rec.id <> $meId
+      AND NOT (me)-[:FOLLOWS]->(rec)
     RETURN DISTINCT rec
     LIMIT $limit
   """)
-    List<UserNode> recommend(long meId, int limit);
+    List<UserNode> recommendFromFollows(long meId, int limit);
+
+    @Query("""
+    MATCH (u:User)
+    WHERE u.id <> $meId
+    RETURN u
+    ORDER BY u.username
+    LIMIT $limit
+  """)
+    List<UserNode> findAllUsersExcept(long meId, int limit);
 
     @Query("""
     MATCH (me:User {id:$meId})-[:FOLLOWS]->(author:User {id:$authorId})
